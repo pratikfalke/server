@@ -284,6 +284,7 @@ CREATE DEFINER=root@localhost
 PROCEDURE add_suppression(pattern VARCHAR(255))
 BEGIN
   INSERT INTO test_suppressions (pattern) VALUES (pattern);
+  FLUSH TABLE test_suppressions;
 END
 */||
 
