@@ -634,6 +634,7 @@ sub run_test_server ($$$) {
 	    my $worker_savedir= $result->{savedir};
 	    my $worker_savename= basename($worker_savedir);
 	    my $savedir= "$opt_vardir/log/$worker_savename";
+        rename($worker_savedir, $savedir);
 
 	    # Move any core files from e.g. mysqltest
         foreach my $coref (glob("core*"), glob("*.dmp"))
@@ -673,11 +674,10 @@ sub run_test_server ($$$) {
 		$num_saved_datadir >= $opt_max_save_datadir)
 	    {
 	      mtr_report(" - skipping '$worker_savedir/'");
-	      rmtree($worker_savedir);
+	      rmtree($savedir);
 	    }
 	    else {
 	      mtr_report(" - saving '$worker_savedir/' to '$savedir/'");
-	      rename($worker_savedir, $savedir);
 	    }
 
 	    resfile_print_test();
